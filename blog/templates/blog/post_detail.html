@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="{% static 'blog/bootstrap/bootstrap.min.css'%}"media="screen">
         <link href="css/styles.css" rel="stylesheet" />
         <link rel="stylesheet"href="{% static 'blog/css/blog-post.css'%}"media="screen">
+        <script src="https://kit.fontawesome.com/fd7ca63b8d.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <!-- Responsive navbar-->
@@ -39,6 +40,7 @@
                         <!-- Post header-->
                         <header class="mb-4">
                             <!-- Post title-->
+                            <br>
                             <h1 class="fw-bolder mb-1">{{post.title}}</h1>
                             <p class ="lead">
                                 by
@@ -57,6 +59,21 @@
                         <!-- Post content-->
                         <section class="mb-5">
                         <p>{{post.content}}</p>
+                      {% if post.file_upload %}
+                     <a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button">Download:
+                          {% if post.get_file_ext == 'csv' %}
+                        <i class="fa-solid fa-file-csv"></i>
+                         {% elif post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls' %}
+                         <i class="fa-regular fa-file-excel"></i>
+                           {% elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc' %}
+                       <i class="fa-regular fa-file-word"></i>
+                     {% else %}
+                         <i class="far fa-file"></i>
+                       {{ post.get_file_name }}
+                   {% endif %}
+                      </a>
+                {% endif %}
+
                         </section>
                     </article>
                     <!-- Comments section-->
@@ -103,9 +120,11 @@
                     </section>
                 </div>
                 <!-- Side widgets-->
+
                 <div class="col-lg-4">
                     <!-- Search widget-->
                     <div class="card mb-4">
+
                         <div class="card-header">Search</div>
                         <div class="card-body">
                             <div class="input-group">
@@ -145,8 +164,8 @@
             </div>
         </div>
         <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+        <footer class="py-4 bg-dark">
+            <div class="container"><p class="m-1 text-center text-white">Copyright &copy; hanataba</p></div>
         </footer>
         <!-- Bootstrap core JS-->
      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
