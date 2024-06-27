@@ -8,7 +8,7 @@
 <h5 class="text-muted">{{ post.hook_text }}</h5>
 <p class="lead">
     by
-    <a href="#">작성자명 쓸 위치</a>
+    <a href="#">{{post.author | upper}}</a>
 </p>
 <!-- Post meta content-->
 <div class="text-muted fst-italic mb-2">{{ post.created_at }}</div>
