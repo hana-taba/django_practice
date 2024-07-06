@@ -1,10 +1,10 @@
 {% extends 'blog/base.html' %}
 
 {% block main_area %}
-    <h1>Blog</h1>
+    <h1>Blog {% if category %}<span class="badge badge-secondary">{{ category }}</span>{% endif %}</h1>
     {% if post_list.exists %}
         {% for p in post_list %}
-            <div class="card mb-4" id="post-{{p.pk}}">
+            <div class="card mb-4" id="post-{{ p.pk }}">
                 {% if p.head_image %}
                     <img class="card-img-top" src="{{ p.head_image.url }}" alt="{{ p }} head image">
                 {% else %}
@@ -12,7 +12,7 @@
                 {% endif %}
                 <div class="card-body">
                     {% if p.category %}
-                        <span class="badge badge-secondary float-right">{{p.category}}</span>
+                        <span class="badge badge-secondary float-right">{{ p.category }}</span>
                     {% else %}
                         <span class="badge badge-secondary float-right">미분류</span>
                     {% endif %}
@@ -21,11 +21,20 @@
                         <h5 class="text-muted">{{ p.hook_text }}</h5>
                     {% endif %}
                     <p class="card-text">{{ p.content|truncatewords:45 }}</p>
-                    <a href="{{ p.get_absolute_url }}" class="btn btn-primary">Read more &rarr;</a>
+
+                    {% if p.tags.exists %}
+                        <i class="fas fa-tags"></i>
+                        {% for tag in p.tags.all %}
+                            <a href="{{ tag.get_absolute_url }}"><span class="badge badge-pill badge-light">{{ tag }}</span></a>
+                        {% endfor %}
+                        <br/>
+                    {% endif %}
+
+                    <a href="{{ p.get_absolute_url }}" class="btn btn-primary mt-2">Read more &rarr;</a>
                 </div>
                 <div class="card-footer text-muted">
                     Posted on {{ p.created_at }} by
-                    <a href="#">{{p.author | upper}}</a>
+                    <a href="#">{{ p.author.username|upper }}</a>
                 </div>
             </div>
         {% endfor %}
